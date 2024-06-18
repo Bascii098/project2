@@ -2,7 +2,7 @@ import './assets/main.css'
 import{getCategoryAPI}from "@/apis/test"
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import '@/styles/element/common.scss'
 import App from './App.vue'
 import router from './router'
 getCategoryAPI().then(res=>{
