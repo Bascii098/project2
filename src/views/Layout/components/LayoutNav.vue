@@ -31,7 +31,7 @@
 
 <style scoped lang="scss">
 .app-topnav {
-  background: #333;
+  background: #e5e4e3;
   ul {
     display: flex;
     height: 53px;
@@ -40,7 +40,7 @@
     li {
       a {
         padding: 0 15px;
-        color: #cdcdcd;
+        color: #999;
         line-height: 1;
         display: inline-block;
 
