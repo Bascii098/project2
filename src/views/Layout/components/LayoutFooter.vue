@@ -82,7 +82,7 @@
       text-align: center;
       padding: 0 72px;
       border-right: 1px solid #f2f2f2;
-      color: #999;
+      color: #333;
 
       &:first-child {
         padding-left: 0;
@@ -110,7 +110,7 @@
       .iconfont {
         font-size: 36px;
         display: block;
-        color: #666;
+        color: #333;
       }
 
       &:hover {
@@ -170,7 +170,7 @@
   }
 
   .extra {
-    background-color: #333;
+    background-color: #f5f5f5;
   }
 
   .slogan {
@@ -184,7 +184,7 @@
     a {
       height: 58px;
       line-height: 58px;
-      color: #fff;
+      color: #333;
       font-size: 28px;
 
       i {
@@ -205,7 +205,7 @@
     height: 170px;
     padding-top: 40px;
     text-align: center;
-    color: #999;
+    color: #333;
     font-size: 15px;
 
     p {
