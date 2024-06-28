@@ -4,6 +4,7 @@ import{ getBannerAPI } from '@/apis/bannerList'
 import {ref,onMounted} from 'vue'
 import{useRoute} from'vue-router'
 import GoodsItem from '../Home/components/GoodsItem.vue'
+import { onBeforeRouteUpdate } from "vue-router";
 const BannerList = ref([])
   const getBanner=async()=> {
    const res = await getBannerAPI({
@@ -16,11 +17,12 @@ const BannerList = ref([])
     
 const categoryData = ref({})
 const route =useRoute()
-  const getCategory=async()=> {
-   const res = await getCategoryAPI(route.params.id)
+  const getCategory=async(id=route.params.id)=> {
+   const res = await getCategoryAPI(id)
       categoryData.value = res.result
     }
     onMounted(()=>getCategory())
+    onBeforeRouteUpdate((to)=>getCategory(to.params.id))
 </script>
 
 <template>
