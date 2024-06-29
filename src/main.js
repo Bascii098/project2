@@ -5,8 +5,11 @@ import App from './App.vue'
 import{LazyPlugin}from '@/directives/lazyLoad'
 
 import router from './router'
-const app = createApp(App)
+import { componentPlugin } from '@/components'
 
+
+const app = createApp(App)
+app.use(componentPlugin)
 app.use(createPinia())
 app.use(router)
 app.use(LazyPlugin)
