@@ -2,11 +2,15 @@
 
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { useUserStore } from './user'
-import{insertCartAPI,FindCartAPI} from '@/apis/cart'
+import { useUserStore } from './userStore'
+import{insertCartAPI,FindCartAPI, delCartAPI} from '@/apis/cart'
 export const useCartStore = defineStore('cart', () => {
   const userStore=useUserStore()
   const isLogin=computed(()=>userStore.userInfo.token)
+  const updateNewList= async ()=>{
+    const res =await FindCartAPI()
+    cartList.value=res.result
+  }
   // 1. 定义state - cartList
   const cartList = ref([])
   // 2. 定义action - addCart
@@ -14,8 +18,7 @@ export const useCartStore = defineStore('cart', () => {
     const{skuId,count} =DetailList
     if(isLogin.value){
       await insertCartAPI({skuId,count})
-      const res =await FindCartAPI()
-      cartList.value=res.result
+      updateNewList()
     }else{
        const item = cartList.value.find((item) => DetailList.skuId === item.skuId)
     if (item) {
@@ -32,9 +35,15 @@ export const useCartStore = defineStore('cart', () => {
     // 思路：通过匹配传递过来的商品对象中的skuId能不能在cartList中找到，找到了就是添加过
    
   }
-  const delCart=(skuId)=>{
-    const idx=cartList.value.findIndex((item)=>skuId===item.skuId)
+  const delCart=async (skuId)=>{
+    if(isLogin.value){
+    await delCartAPI([skuId])
+    updateNewList()
+    }else{
+      const idx=cartList.value.findIndex((item)=>skuId===item.skuId)
     cartList.value.splice(idx, 1)
+    }
+    
   }
   const singleCheck = (skuId, selected) => {
     // 通过skuId找到要修改的那一项 然后把它的selected修改为传过来的selected
