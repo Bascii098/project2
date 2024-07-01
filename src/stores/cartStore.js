@@ -37,6 +37,8 @@ const isAll=computed(()=>cartList.value.every((item)=>item.selected))
 const allCheck=(selected)=>{
   cartList.value.forEach(item=>item.selected=selected)
 }
+const selectedCount=computed(()=>cartList.value.filter(item=>item.selected).reduce((a,c)=>a+c.count,0))
+const selectedPrice=computed(()=>cartList.value.filter(item=>item.selected).reduce((a,c)=>a+c.count*c.price,0))
   return {
     cartList,
     addCart,
@@ -45,7 +47,9 @@ const allCheck=(selected)=>{
     allPrice,
     singleCheck,
     isAll,
-    allCheck
+    allCheck,
+    selectedCount,
+    selectedPrice
   }
 }, {
   persist: true,
