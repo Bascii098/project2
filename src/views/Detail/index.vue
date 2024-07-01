@@ -15,7 +15,6 @@ const getDetailList=async()=>{
 onMounted(()=>getDetailList())
 let skuObj={}
 const XtxChange=(sku)=>{
-  console.log(sku)
   skuObj=sku
 }
 const addCart=()=>{

@@ -12,7 +12,7 @@ const cartList = cartStore.cartList
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox/>
+                <el-checkbox :model-value="cartStore.isAll" @change="cartStore.allCheck"/>
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
