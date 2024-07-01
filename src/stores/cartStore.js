@@ -1,33 +1,35 @@
 // 封装购物车模块
-
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { useUserStore } from './userStore'
+import { useRouter } from 'vue-router'
 import{insertCartAPI,FindCartAPI, delCartAPI} from '@/apis/cart'
 export const useCartStore = defineStore('cart', () => {
   const userStore=useUserStore()
   const isLogin=computed(()=>userStore.userInfo.token)
+  const router=useRouter()
+  // 1. 定义state - cartList
+  const cartList = ref([])
   const updateNewList= async ()=>{
     const res =await FindCartAPI()
     cartList.value=res.result
   }
-  // 1. 定义state - cartList
-  const cartList = ref([])
   // 2. 定义action - addCart
   const addCart =async (DetailList) => {
     const{skuId,count} =DetailList
     if(isLogin.value){
+      const item = cartList.value.find((item) => DetailList.skuId === item.skuId)
+      if (item) {
+        // 找到了
+        item.count++
+      } else {
+        // 没找到
+        cartList.value.push(DetailList)
+      }
       await insertCartAPI({skuId,count})
-      updateNewList()
     }else{
-       const item = cartList.value.find((item) => DetailList.skuId === item.skuId)
-    if (item) {
-      // 找到了
-      item.count++
-    } else {
-      // 没找到
-      cartList.value.push(DetailList)
-    }
+    router.push('/login')
+  
     }
     // 添加购物车操作
     // 已添加过 - count + 1
@@ -36,14 +38,10 @@ export const useCartStore = defineStore('cart', () => {
    
   }
   const delCart=async (skuId)=>{
-    if(isLogin.value){
-    await delCartAPI([skuId])
-    updateNewList()
-    }else{
-      const idx=cartList.value.findIndex((item)=>skuId===item.skuId)
+    const idx=cartList.value.findIndex((item)=>skuId===item.skuId)
     cartList.value.splice(idx, 1)
-    }
-    
+    await delCartAPI([skuId])
+
   }
   const singleCheck = (skuId, selected) => {
     // 通过skuId找到要修改的那一项 然后把它的selected修改为传过来的selected
@@ -58,7 +56,10 @@ const allCheck=(selected)=>{
 }
 const selectedCount=computed(()=>cartList.value.filter(item=>item.selected).reduce((a,c)=>a+c.count,0))
 const selectedPrice=computed(()=>cartList.value.filter(item=>item.selected).reduce((a,c)=>a+c.count*c.price,0))
-  return {
+const clearCart=()=>{
+  cartList.value=[]
+}
+return {
     cartList,
     addCart,
     delCart,
@@ -69,7 +70,9 @@ const selectedPrice=computed(()=>cartList.value.filter(item=>item.selected).redu
     allCheck,
     selectedCount,
     selectedPrice,
-    isLogin
+    isLogin,
+    clearCart,
+    updateNewList
   }
 }, {
   persist: true,

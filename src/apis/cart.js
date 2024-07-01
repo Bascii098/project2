@@ -11,6 +11,15 @@ export const insertCartAPI = ({ skuId, count }) => {
     }
   })
 }
+//获取购物车列表
+export const FindCartAPI = (ids) => {
+  return http({
+    url: '/member/cart',
+    data: {
+      ids
+    }
+  })
+}
 // 删除购物车
 export const delCartAPI = (ids) => {
   return http({
@@ -21,12 +30,4 @@ export const delCartAPI = (ids) => {
     }
   })
 }
-//获取购物车列表
-export const FindCartAPI = (ids) => {
-  return http({
-    url: '/member/cart',
-    data: {
-      ids
-    }
-  })
-}
+
