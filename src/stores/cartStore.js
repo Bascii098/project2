@@ -41,7 +41,7 @@ export const useCartStore = defineStore('cart', () => {
     const idx=cartList.value.findIndex((item)=>skuId===item.skuId)
     cartList.value.splice(idx, 1)
     await delCartAPI([skuId])
-
+    updateNewList()
   }
   const singleCheck = (skuId, selected) => {
     // 通过skuId找到要修改的那一项 然后把它的selected修改为传过来的selected
