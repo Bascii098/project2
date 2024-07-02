@@ -4,6 +4,7 @@ import { getUserOrder } from '@/apis/order'
 import { onMounted, ref } from 'vue'
 
 // 获取订单列表
+const total = ref(0)
 const orderList = ref([])
 const params = ref({
   orderState: 0,
@@ -13,6 +14,7 @@ const params = ref({
 const getOrderList = async () => {
   const res = await getUserOrder(params.value)
   orderList.value = res.result.items
+  total.value = res.result.counts
 }
 // 订单列表
 onMounted(() => getOrderList())
@@ -25,11 +27,29 @@ const tabTypes = [
   { name: "complete", label: "已完成" },
   { name: "cancel", label: "已取消" }
 ]
+  // 创建格式化函数
+  const fomartPayState = (payState) => {
+    const stateMap = {
+      1: '待付款',
+      2: '待发货',
+      3: '待收货',
+      4: '待评价',
+      5: '已完成',
+      6: '已取消'
+    }
+    return stateMap[payState]
+  }
 const tabChange=(type)=>{
 params.value.orderState=type
 getOrderList()
 }
+// 分页逻辑
 
+// 页数切换
+const pageChange = (page) => {
+  params.value.page = page
+  getOrderList()
+}
 </script>
 
 <template>
@@ -75,7 +95,7 @@ getOrderList()
                 </ul>
               </div>
               <div class="column state">
-                <p>{{ order.orderState }}</p>
+                <p>{{ fomartPayState(order.orderState) }}</p>
                 <p v-if="order.orderState === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>
@@ -112,7 +132,7 @@ getOrderList()
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <el-pagination :total="total" @current-change="pageChange" :page-size="params.pageSize" background layout="prev, pager, next" />
           </div>
         </div>
       </div>
