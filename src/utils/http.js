@@ -9,7 +9,7 @@ let timer = null;//定时器
 // 创建axios实例
 const http = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
-  timeout: 8000
+  timeout: 1000*10
 })
 
 // axios请求拦截器
@@ -65,7 +65,7 @@ http.interceptors.response.use(res => {
   const userStore = useUserStore()
   ElMessage({
   type:'warning',
-  message:e.response.data.message
+  message:e.response.data?.message
 })
 
 //401token失效处理

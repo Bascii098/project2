@@ -1,6 +1,6 @@
 <script setup>
 import{getDetail} from '@/apis/detail.js'
-import{useRoute} from "vue-router"
+import{useRoute,onBeforeRouteUpdate} from "vue-router"
 import { useCartStore } from '@/stores/cartStore'
 import{ref,onMounted} from 'vue'
 import DetailHot from './components/DetailHot.vue'
@@ -8,11 +8,14 @@ import { ElMessage } from 'element-plus';
 const cartStore=useCartStore()
 const route=useRoute()
 const DetailList=ref({})
-const getDetailList=async()=>{
-  const res= await getDetail(route.params.id)
+const getDetailList=async(id=route.params.id)=>{
+  const res= await getDetail(id)
   DetailList.value=res.result
 }
 onMounted(()=>getDetailList())
+onBeforeRouteUpdate((to)=>{
+  getDetailList(to.params.id)
+})
 let skuObj={}
 const XtxChange=(sku)=>{
   skuObj=sku

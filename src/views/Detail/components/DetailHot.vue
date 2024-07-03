@@ -25,13 +25,14 @@ const getHotList = async () => {
   goodList.value = res.result
 }
 onMounted(()=>getHotList())
+
 </script>
 
 <template>
   <div class="goods-hot">
     <h3> {{ title }} </h3>
     <!-- 商品区块 -->
-    <RouterLink :to="`/detail/${item.id}`" class="goods-item" v-for="item in goodList" :key="item.id">
+    <RouterLink :to="`/detail/${item.id}`"  class="goods-item" v-for="item in goodList" :key="item.id">
       <img :src="item.picture" alt="" />
       <p class="name ellipsis">{{ item.name }}</p>
       <p class="desc ellipsis">{{ item.desc }}</p>
