@@ -8,7 +8,7 @@ let loadingInstance = null;//蒙版实例
 let timer = null;//定时器
 // 创建axios实例
 const http = axios.create({
-  baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
+  baseURL: 'https://pcapi-xiaotuxian-front-devtest.itheima.net',
   timeout: 1000*10
 })
 
