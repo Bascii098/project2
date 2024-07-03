@@ -19,36 +19,57 @@ const router = createRouter({
       path: '/',
       name: 'Layout',
       component: Layout,
+      meta:{
+        title:'线上商店-首页 '
+      },
       children: [
         {
           path: '',
           name: 'Home',
-          component: Home
+          component: Home,
       },
         {
           path: '/category/:id',
           name: 'Category',
-          component: Category
+          component: Category,
+          meta:{
+            title:'线上商店-分类页 '
+          },
       },
       {
         path:'category/sub/:id',
-        component:SubCategory
+        component:SubCategory,
+        meta:{
+          title:'线上商店-分类页 '
+        },
       },
       {
         path:'detail/:id',
-        component:Deatil
+        component:Deatil,
+        meta:{
+          title:'线上商店-详情页 '
+        },
       },
       {
         path:'cartlist',
-        component:cartList
+        component:cartList,
+        meta:{
+          title:'线上商店-购物车 '
+        },
       },
       {
         path:'checkout',
-        component:CheckOut
+        component:CheckOut,
+        meta:{
+          title:'线上商店-结算页 '
+        },
       },
       {
         path:'pay',
-        component:pay
+        component:pay,
+        meta:{
+          title:'线上商店-支付页 '
+        },
       },
       {
         path: 'paycallback', // 注意路径，必须是paycallback
@@ -57,7 +78,9 @@ const router = createRouter({
       {
         path: '/member',
         component: Member,
-        
+        meta:{
+          title:'个人中心 '
+        },
         children:[
           {
           path:'',
@@ -74,7 +97,10 @@ const router = createRouter({
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta:{
+      title:'线上商店-登录 '
+    },
   }
 ],
 scrollBehavior(){

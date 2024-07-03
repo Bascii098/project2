@@ -71,7 +71,7 @@ const pageChange = (page) => {
               <!-- 未付款，倒计时时间还有 -->
               <span class="down-time" v-if="order.orderState === 1">
                 <i class="iconfont icon-down-time"></i>
-                <b>付款截止: {{order.countdown}}</b>
+                <b>付款截止: {{order.countdown%60>0?order.countdown%60:'1'}}分</b>
               </span>
             </div>
             <div class="body">
